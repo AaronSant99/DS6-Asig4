@@ -38,7 +38,12 @@ class MainActivity : AppCompatActivity() {
                 R.id.radioButton3 -> celsius_rankine(celsius)
                 else -> return@setOnCheckedChangeListener
             }
-
+            ConversionType.tipoConv=when (checkedId) {
+                R.id.radioButton -> "K"
+                R.id.radioButton2 -> "F"
+                R.id.radioButton3 -> "R"
+                else -> "?"
+            }
             val intent = Intent(this, SecondActivity::class.java)
             intent.putExtra("RESULTADO", resultado)
             startActivity(intent)

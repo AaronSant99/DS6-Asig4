@@ -12,7 +12,8 @@ class DatabaseHelper(context: Context) :
     override fun onCreate(db: SQLiteDatabase) {
         val CREATE_CONVERSION_TABLE = ("CREATE TABLE $TABLE_NAME (" +
                 "$COLUMN_ID INTEGER PRIMARY KEY," +
-                "$COLUMN_RESULT REAL)")
+                "$COLUMN_RESULT REAL," +
+                "$COLUMN_TYPE TEXT)")
         db.execSQL(CREATE_CONVERSION_TABLE)
     }
 
@@ -25,20 +26,27 @@ class DatabaseHelper(context: Context) :
         val db = this.writableDatabase
         val values = ContentValues()
         values.put(COLUMN_RESULT, result)
+        values.put(COLUMN_TYPE, ConversionType.tipoConv)
         db.insert(TABLE_NAME, null, values)
+        db.close()
+    }
+    fun deleteAllResults() {
+        val db = this.writableDatabase
+        db.delete(TABLE_NAME, null, null)
         db.close()
     }
 
     @SuppressLint("Range")
-    fun getAllResults(): List<Pair<Int, Double>> {
-        val resultList = mutableListOf<Pair<Int, Double>>()
+    fun getAllResults(): List<Resultado> {
+        val resultList = mutableListOf<Resultado>()
         val db = this.readableDatabase
-        val cursor = db.rawQuery("SELECT $COLUMN_ID, $COLUMN_RESULT FROM $TABLE_NAME", null)
+        val cursor = db.rawQuery("SELECT $COLUMN_ID, $COLUMN_RESULT,  $COLUMN_TYPE  FROM $TABLE_NAME", null)
         cursor.use {
             while (cursor.moveToNext()) {
                 val id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID))
                 val result = cursor.getDouble(cursor.getColumnIndex(COLUMN_RESULT))
-                resultList.add(Pair(id, result))
+                val tipoC = cursor.getString(cursor.getColumnIndex(COLUMN_TYPE))
+                resultList.add(Resultado(id, result,tipoC))
             }
         }
         cursor.close()
@@ -46,10 +54,12 @@ class DatabaseHelper(context: Context) :
     }
 
     companion object {
-        private const val DATABASE_VERSION = 1
+        private const val DATABASE_VERSION = 2
         private const val DATABASE_NAME = "conversiones.db"
         private const val TABLE_NAME = "conversion_temperatura"
         private const val COLUMN_ID = "id"
         private const val COLUMN_RESULT = "resultado"
+        private const val COLUMN_TYPE = "tipo"
     }
 }
+data class Resultado(val id: Int, val valor: Double, val tipo: String)
