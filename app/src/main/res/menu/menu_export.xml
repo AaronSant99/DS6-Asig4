@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_export"
+        android:icon="@android:drawable/ic_menu_save"
+        android:title="Exportar"
+        app:showAsAction="ifRoom|withText">
+        <menu>
+            <item
+                android:id="@+id/export_csv"
+                android:title="Exportar como CSV"/>
+            <item
+                android:id="@+id/export_xls"
+                android:title="Exportar como XLS"/>
+            <item
+                android:id="@+id/export_xlsx"
+                android:title="Exportar como XLSX"/>
+        </menu>
+    </item>
+</menu>
