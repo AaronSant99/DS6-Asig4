@@ -1,5 +1,6 @@
 package com.example.demo_celsius_activities_db
 
+
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
