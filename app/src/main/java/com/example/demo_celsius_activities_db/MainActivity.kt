@@ -9,6 +9,12 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
 
+/*
+* Justin Barrios, Cedula: 8-983-1021
+* Luis Monterrosa, Cedula: 8-1014-1095
+* Aaron Santamaria, Cedula: 3-742-1763
+* */
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var boton1: RadioButton
